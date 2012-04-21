@@ -1,0 +1,25 @@
+Independent Classes
+===================
+Company
+Country
+State
+District
+City
+
+Company specific Classes
+=========================
+LedgerGroup
+Ledger
+AddressType
+Party
+ItemCompany
+ItemCategory (ItemGroup)
+....
+
+Transactions
+===================
+Payment
+Receipt
+Sale
+Purchase
+....
