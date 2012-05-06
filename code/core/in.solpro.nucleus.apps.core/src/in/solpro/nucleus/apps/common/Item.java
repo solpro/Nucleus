@@ -5,158 +5,206 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public class Item extends BaseObject{
-	public static final int LOCKED_NO = 0;
-	public static final int LOCKED_YES = 1;
+@Table(name = "Item", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "company_id", "itemcompany_id"}))
+public class Item extends BaseObject
+{
+    public static final int LOCKED_NO = 0;
 
-	@Id
-	@GeneratedValue ( strategy=GenerationType.IDENTITY)
-	private int id;
-	@Column( nullable=false)
-	private String name;
-	private String description;
-	private ItemCompany company;
-	private ItemGroup itemgroup;
-	private Unit unit;
-	private String sku;
-	private double mrp;
-	private ItemType type = ItemType.TAXABLE;
-	private double openingstock;
-	private int tax;
-	private int locked = LOCKED_NO;
-	private StockLocation stocklocation;
-	private int tradingaccount;
-	
-	public int getId() {
-		return id;
-	}
+    public static final int LOCKED_YES = 1;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	public String getName() {
-		return name;
-	}
+    @Column(nullable = false)
+    private String name;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private String description;
 
-	public String getDescription() {
-		return description;
-	}
+    private ItemCompany itemcompany;
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    private ItemGroup itemgroup;
 
-	public ItemCompany getItemCompany() {
-		return company;
-	}
+    private Unit unit;
 
-	public void setItemCompany(ItemCompany company) {
-		this.company = company;
-	}
+    private String sku;
 
-	public ItemGroup getItemgroup() {
-		return itemgroup;
-	}
+    private double mrp;
 
-	public void setItemgroup(ItemGroup itemgroup) {
-		this.itemgroup = itemgroup;
-	}
+    private ItemType type = ItemType.TAXABLE;
 
-	public Unit getUnit() {
-		return unit;
-	}
+    private double openingstock;
 
-	public void setUnit(Unit unit) {
-		this.unit = unit;
-	}
+    private int tax;
 
-	public String getSku() {
-		return sku;
-	}
+    private int locked = LOCKED_NO;
 
-	public void setSku(String sku) {
-		this.sku = sku;
-	}
+    private StockLocation stocklocation;
 
-	public double getMrp() {
-		return mrp;
-	}
+    private Ledger tradingaccount;
 
-	public void setMrp(double mrp) {
-		this.mrp = mrp;
-	}
+    public int getId()
+    {
+        return id;
+    }
 
-	public String toString() {
-		return this.sku;
-	}
+    public void setId( int id )
+    {
+        this.id = id;
+    }
 
-	public boolean getLocked() {
-		return locked == LOCKED_YES ? true : false;
-	}
+    public String getName()
+    {
+        return name;
+    }
 
-	public void setLocked(boolean locked) {
-		this.locked = locked == true ? LOCKED_YES : LOCKED_NO;
-	}
+    public void setName( String name )
+    {
+        this.name = name;
+    }
 
-	public void setLocked(int locked) {
-		this.locked = locked == LOCKED_YES ? LOCKED_YES : LOCKED_NO;
-	}
+    public String getDescription()
+    {
+        return description;
+    }
 
-	public void setOpeningstock(double openingstock) {
-		this.openingstock = openingstock;
-	}
+    public void setDescription( String description )
+    {
+        this.description = description;
+    }
 
-	public double getOpeningstock() {
-		return openingstock;
-	}
+    public ItemCompany getItemCompany()
+    {
+        return itemcompany;
+    }
 
-	public void setTax(int tax) {
-		this.tax = tax;
-	}
+    public void setItemCompany( ItemCompany itemcompany )
+    {
+        this.itemcompany = itemcompany;
+    }
 
-	public int getTax() {
-		return tax;
-	}
+    public ItemGroup getItemgroup()
+    {
+        return itemgroup;
+    }
 
-	public void setType(ItemType type) {
-		this.type = type;
-	}
+    public void setItemgroup( ItemGroup itemgroup )
+    {
+        this.itemgroup = itemgroup;
+    }
 
-	public void setType(int type) {
-		this.type = ItemType.getItemType(type);
-	}
+    public Unit getUnit()
+    {
+        return unit;
+    }
 
-	public ItemType getType() {
-		return type;
-	}
+    public void setUnit( Unit unit )
+    {
+        this.unit = unit;
+    }
 
-	public void setStocklocation(StockLocation stocklocation) {
-		this.stocklocation = stocklocation;
-	}
+    public String getSku()
+    {
+        return sku;
+    }
 
-	public StockLocation getStocklocation() {
-		return stocklocation;
-	}
+    public void setSku( String sku )
+    {
+        this.sku = sku;
+    }
 
-	/**
-	 * @param tradingaccount the tradingaccount to set
-	 */
-	public void setTradingaccount(int tradingaccount) {
-		this.tradingaccount = tradingaccount;
-	}
+    public double getMrp()
+    {
+        return mrp;
+    }
 
-	/**
-	 * @return the tradingaccount
-	 */
-	public int getTradingaccount() {
-		return tradingaccount;
-	}
+    public void setMrp( double mrp )
+    {
+        this.mrp = mrp;
+    }
+
+    public String toString()
+    {
+        return this.sku;
+    }
+
+    public boolean getLocked()
+    {
+        return locked == LOCKED_YES ? true : false;
+    }
+
+    public void setLocked( boolean locked )
+    {
+        this.locked = locked == true ? LOCKED_YES : LOCKED_NO;
+    }
+
+    public void setLocked( int locked )
+    {
+        this.locked = locked == LOCKED_YES ? LOCKED_YES : LOCKED_NO;
+    }
+
+    public void setOpeningstock( double openingstock )
+    {
+        this.openingstock = openingstock;
+    }
+
+    public double getOpeningstock()
+    {
+        return openingstock;
+    }
+
+    public void setTax( int tax )
+    {
+        this.tax = tax;
+    }
+
+    public int getTax()
+    {
+        return tax;
+    }
+
+    public void setType( ItemType type )
+    {
+        this.type = type;
+    }
+
+    public void setType( int type )
+    {
+        this.type = ItemType.getItemType( type );
+    }
+
+    public ItemType getType()
+    {
+        return type;
+    }
+
+    public void setStocklocation( StockLocation stocklocation )
+    {
+        this.stocklocation = stocklocation;
+    }
+
+    public StockLocation getStocklocation()
+    {
+        return stocklocation;
+    }
+
+    /**
+     * @param tradingaccount the tradingaccount to set
+     */
+    public void setTradingaccount( Ledger tradingaccount )
+    {
+        this.tradingaccount = tradingaccount;
+    }
+
+    /**
+     * @return the tradingaccount
+     */
+    public Ledger getTradingaccount()
+    {
+        return tradingaccount;
+    }
 }
-

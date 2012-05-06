@@ -6,14 +6,14 @@ import javax.persistence.Persistence;
 
 public class EntityManagerUtil
 {
-	private static EntityManagerFactory factory;
+    private static EntityManagerFactory factory;
 
-	public static EntityManager getEntityManager()
-	{
-		if (factory == null)
-		{
-			factory = Persistence.createEntityManagerFactory("nucleus");
-		}
-		return factory.createEntityManager();
-	}
+    public static EntityManager getEntityManager()
+    {
+        if ( factory == null )
+        {
+            factory = Persistence.createEntityManagerFactory( "nucleus" );
+        }
+        return factory.createEntityManager();
+    }
 }

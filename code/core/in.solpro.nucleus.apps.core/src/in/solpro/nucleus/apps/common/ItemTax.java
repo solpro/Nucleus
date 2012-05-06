@@ -4,60 +4,101 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public class ItemTax extends BaseObject{
-	@Id
-	@GeneratedValue
-	private int id;
-	@Column(nullable=false)
-	private String name;
-	private String description;
-	private double value;
-	private Ledger ledger;
+@Table(name = "ItemTax", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "company_id"}))
+public class ItemTax extends BaseObject
+{
+    @Id
+    @GeneratedValue
+    private int id;
 
-	public int getId() {
-		return id;
-	}
+    Item item;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Column(nullable = false)
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    private String description;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private double value;
 
-	public String getDescription() {
-		return description;
-	}
+    private Ledger ledger;
+    
+    private TaxType taxtype;
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public TaxType getType()
+    {
+        return taxtype;
+    }
 
-	public double getValue() {
-		return value;
-	}
+    public void setType( TaxType taxtype )
+    {
+        this.taxtype = taxtype;
+    }
 
-	public void setValue(double value) {
-		this.value = value;
-	}
+    public int getId()
+    {
+        return id;
+    }
 
-	public String toString() {
-		return this.name;
-	}
+    public void setId( int id )
+    {
+        this.id = id;
+    }
 
-	public void setLedger(Ledger ledger) {
-		this.ledger = ledger;
-	}
+    public Item getItem()
+    {
+        return item;
+    }
 
-	public Ledger getLedger() {
-		return ledger;
-	}
+    public void setItem( Item item )
+    {
+        this.item = item;
+    }
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName( String name )
+    {
+        this.name = name;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription( String description )
+    {
+        this.description = description;
+    }
+
+    public double getValue()
+    {
+        return value;
+    }
+
+    public void setValue( double value )
+    {
+        this.value = value;
+    }
+
+    public String toString()
+    {
+        return this.name;
+    }
+
+    public void setLedger( Ledger ledger )
+    {
+        this.ledger = ledger;
+    }
+
+    public Ledger getLedger()
+    {
+        return ledger;
+    }
 }
-

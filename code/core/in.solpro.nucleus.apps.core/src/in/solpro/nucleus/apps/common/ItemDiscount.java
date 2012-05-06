@@ -3,60 +3,48 @@ package in.solpro.nucleus.apps.common;
 import java.sql.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public class ItemDiscount extends Discount{
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	private int item;
-	private Item objItem;
-	private Date datefrom;
-	private Date dateto;
+@Table(name = "ItemDiscount", uniqueConstraints = @UniqueConstraint(columnNames = {"item_id","datefrom","dateto"}))
+public class ItemDiscount extends Discount
+{
 
-	public int getId() {
-		return id;
-	}
+    private Item item;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    private Date datefrom;
 
-	
-	public Date getDatefrom() {
-		return datefrom;
-	}
+    private Date dateto;
 
-	public void setDatefrom(Date datefrom) {
-		this.datefrom = datefrom;
-	}
+    public Date getDatefrom()
+    {
+        return datefrom;
+    }
 
-	public Date getDateto() {
-		return dateto;
-	}
+    public void setDatefrom( Date datefrom )
+    {
+        this.datefrom = datefrom;
+    }
 
-	public void setDateto(Date dateto) {
-		this.dateto = dateto;
-	}
+    public Date getDateto()
+    {
+        return dateto;
+    }
 
-	public int getItem() {
-		return item;
-	}
+    public void setDateto( Date dateto )
+    {
+        this.dateto = dateto;
+    }
 
-	public void setItem(int item) {
-		this.item = item;
-	}
+    public Item getItem()
+    {
+        return item;
+    }
 
-	public Item getObjItem() {
-		return objItem;
-	}
-
-	public void setObjItem(Item item) {
-		this.objItem = item;
-	}
+    public void setItem( Item item )
+    {
+        this.item = item;
+    }
 
 }
-
