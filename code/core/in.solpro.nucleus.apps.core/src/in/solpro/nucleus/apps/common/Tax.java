@@ -5,76 +5,106 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public class Tax extends BaseObject{
+@Table(name = "Tax", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "company_id"}))
+public class Tax extends BaseObject
+{
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-    @Column(nullable=false)
-	private String name;
-	private String description;
-	private double value;
-	private TaxType type;
-	private int ledger;
-	public int getId() {
-		return id;
-	}
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Column(nullable = false)
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    private String description;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private double value;
 
-	public String getDescription() {
-		return description;
-	}
+    @JoinColumn(nullable=false)
+    private TaxType type;
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    @JoinColumn(nullable=false)
+    private Ledger ledger;
 
-	public double getValue() {
-		return value;
-	}
+    public int getId()
+    {
+        return id;
+    }
 
-	public void setValue(double value) {
-		this.value = value;
-	}
+    public void setId( int id )
+    {
+        this.id = id;
+    }
 
-	public String toString() {
-		return this.name;
-	}
+    public String getName()
+    {
+        return name;
+    }
 
-	public void setType(TaxType type) {
-		this.type = type;
-	}
+    public void setName( String name )
+    {
+        this.name = name;
+    }
 
-	public TaxType getType() {
-		return type;
-	}
-	
-	public void setType(int type){
-		TaxType typ = TaxType.getTaxType(type);
-		if(typ!=null){
-			this.type=typ;
-		}else{
-			this.type=TaxType.PERCENT;
-		}
-	}
+    public String getDescription()
+    {
+        return description;
+    }
 
-	public void setLedger(int ledger) {
-		this.ledger = ledger;
-	}
+    public void setDescription( String description )
+    {
+        this.description = description;
+    }
 
-	public int getLedger() {
-		return ledger;
-	}
+    public double getValue()
+    {
+        return value;
+    }
+
+    public void setValue( double value )
+    {
+        this.value = value;
+    }
+
+    public String toString()
+    {
+        return this.name;
+    }
+
+    public void setType( TaxType type )
+    {
+        this.type = type;
+    }
+
+    public TaxType getType()
+    {
+        return type;
+    }
+
+    public void setType( int type )
+    {
+        TaxType typ = TaxType.getTaxType( type );
+        if ( typ != null )
+        {
+            this.type = typ;
+        }
+        else
+        {
+            this.type = TaxType.PERCENT;
+        }
+    }
+
+    public void setLedger( Ledger ledger )
+    {
+        this.ledger = ledger;
+    }
+
+    public Ledger getLedger()
+    {
+        return ledger;
+    }
 }

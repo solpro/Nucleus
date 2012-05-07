@@ -7,55 +7,67 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public class ItemBatch {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	private Item objItem = null;
-	@Column(nullable=false)
-	private String name;
-	private Date expirydate;
+@Table(name = "ItemBatch", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "company_id", "item_id"}))
+public class ItemBatch extends BaseObject
+{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	public int getId() {
-		return id;
-	}
+    @JoinColumn(nullable=false)
+    private Item item = null;
 
-	public void setId(int id) {
-		this.id = id;
-	}
-/*
-	public int getItem() {
-		return item;
-	}
+    @Column(nullable = false)
+    private String name;
 
-	public void setItem(int item) {
-		this.item = item;
-	}*/
+    private Date expirydate;
 
-	public Item getObjItem() {
-		return objItem;
-	}
+    public int getId()
+    {
+        return id;
+    }
 
-	public void setObjItem(Item item) {
-		this.objItem = item;
-	}
+    public void setId( int id )
+    {
+        this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    /*
+     * public int getItem() { return item; } public void setItem(int item) { this.item = item; }
+     */
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Item getItem()
+    {
+        return item;
+    }
 
-	public Date getExpirydate() {
-		return expirydate;
-	}
+    public void setItem( Item item )
+    {
+        this.item = item;
+    }
 
-	public void setExpirydate(Date expirydate) {
-		this.expirydate = expirydate;
-	}
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName( String name )
+    {
+        this.name = name;
+    }
+
+    public Date getExpirydate()
+    {
+        return expirydate;
+    }
+
+    public void setExpirydate( Date expirydate )
+    {
+        this.expirydate = expirydate;
+    }
 }
-

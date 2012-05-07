@@ -1,68 +1,70 @@
 package in.solpro.nucleus.apps.common;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.Vector;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
+@Table(name = "LedgerLabel", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "company_id"}))
+
 public class LedgerLabel extends BaseObject
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int labelID;
+    private int id;
 
     @Column(nullable = false)
-    private String labelName;
-    
-    @ManyToMany(cascade=CascadeType.MERGE)
-    @JoinTable(name = "LEDGER_LABEL",
-    joinColumns = {
-    @JoinColumn(name="label") 
-    },
-    inverseJoinColumns = {
-    @JoinColumn(name="ledger")
-    }
-    )
-    private Set<Ledger> ledgers;
+    private String name;
 
-    public void setLabelName( String labelName )
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "LEDGER_LABEL", joinColumns = {@JoinColumn(name = "label")}, inverseJoinColumns = {@JoinColumn(name = "ledger")})
+    private Set<Ledger> ledgers = new HashSet<Ledger>();
+
+    public void setName( String name )
     {
-        this.labelName = labelName;
+        this.name = name;
     }
 
-    public String getLabelName()
+    public String getName()
     {
-        return labelName;
+        return name;
     }
 
-    public void setLabelID( int labelID )
+    public void setId( int ID )
     {
-        this.labelID = labelID;
+        this.id = ID;
     }
 
-    public int getLabelID()
+    public int getId()
     {
-        return labelID;
+        return id;
     }
 
     public String toString()
     {
-        return this.labelName;
+        return this.name;
     }
+    
 
     public Set<Ledger> getLedgers()
     {
         return ledgers;
+    }
+    
+    public void setLedger( Ledger ledger )
+    {
+        ledgers.add( ledger );
     }
 
     public void setLedgers( Set<Ledger> ledgers )

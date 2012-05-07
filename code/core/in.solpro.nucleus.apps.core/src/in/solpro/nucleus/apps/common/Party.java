@@ -1,168 +1,199 @@
 package in.solpro.nucleus.apps.common;
-import java.util.Vector;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public class Party extends Ledger{
-		private static int CUSTOMER = 1;
-		private static int SUPPLIER = 2;
-		@Id
-		@GeneratedValue(strategy=GenerationType.IDENTITY)
-		private int id;
-		private int type;
-		private String pan;
-		private String tan;
-		private String vat;
-		private String tot;
-		private String servicetax;
-	//	private Vector<PartyAddress> addressList = new Vector<PartyAddress>();
-		private double drlimit;
-		private double crlimit;
+@Table(name = "Party", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "company_id"}))
+public class Party extends Ledger
+{
+    private static int CUSTOMER = 1;
 
-		public int getId() {
-			return id;
-		}
+    private static int SUPPLIER = 2;
 
-		public void setId(int id) {
-			this.id = id;
-		}
+    private int type;
 
-		public int getType() {
-			return type;
-		}
+    private String pan;
 
-		public void setType(int type) {
-			this.type = type;
-		}
+    private String tan;
 
-		public String getPan() {
-			return pan;
-		}
+    private String vat;
 
-		public void setPan(String pan) {
-			this.pan = pan;
-		}
+    private String tot;
 
-		public String getTan() {
-			return tan;
-		}
+    private String servicetax;
 
-		public void setTan(String tan) {
-			this.tan = tan;
-		}
+    @OneToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "PARTY_ADDRESS", joinColumns = {@JoinColumn(name = "party")}, inverseJoinColumns = {@JoinColumn(name = "address")})
+    private List<PartyAddress> addressList;
 
-		public String getVat() {
-			return vat;
-		}
+    private double drlimit;
 
-		public void setVat(String vat) {
-			this.vat = vat;
-		}
+    private double crlimit;
 
-		public String getTot() {
-			return tot;
-		}
+    /*
+     * public int getId() { return id; } public void setId(int id) { this.id = id; }
+     */
 
-		public void setTot(String tot) {
-			this.tot = tot;
-		}
+    public int getType()
+    {
+        return type;
+    }
 
-		public String getServicetax() {
-			return servicetax;
-		}
+    public void setType( int type )
+    {
+        this.type = type;
+    }
 
-		public void setServicetax(String servicetax) {
-			this.servicetax = servicetax;
-		}
+    public String getPan()
+    {
+        return pan;
+    }
 
-		public String toString() {
-			return this.name;
-		}
+    public void setPan( String pan )
+    {
+        this.pan = pan;
+    }
 
-/*		public void setAddressList(Vector<PartyAddress> addressList) {
-			this.addressList = addressList;
-		}
+    public String getTan()
+    {
+        return tan;
+    }
 
-		public Vector<PartyAddress> getAddressList() {
-			if (addressList == null) {
-				try {
-					addressList = PartyAddressHelper.getPartyaddressList(ledgerId);
-				} catch (Exception e) {
+    public void setTan( String tan )
+    {
+        this.tan = tan;
+    }
 
-				}
-				if (addressList == null) {
-					addressList = new Vector<PartyAddress>();
-				}
-			}
-			return addressList;
-		}
-*/
-		public boolean isCustomer() {
-			if ((type & CUSTOMER) != 0) {
-				return true;
-			}
-			return false;
-		}
+    public String getVat()
+    {
+        return vat;
+    }
 
-		public boolean isSupplier() {
-			if ((type & SUPPLIER) != 0) {
-				return true;
-			}
-			return false;
-		}
+    public void setVat( String vat )
+    {
+        this.vat = vat;
+    }
 
-		public void setCustomer(boolean value) {
-			if(value){
-				type = type | CUSTOMER;
-			}else{
-				type = type & (~CUSTOMER);
-			}
-		}
+    public String getTot()
+    {
+        return tot;
+    }
 
-		public void setSupplier(boolean value) {
-			if(value){
-				type = type | SUPPLIER;
-			}else{
-				type = type & (~SUPPLIER);
-			}
-		}
+    public void setTot( String tot )
+    {
+        this.tot = tot;
+    }
 
-		public void setDrlimit(double drlimit) {
-			this.drlimit = drlimit;
-		}
+    public String getServicetax()
+    {
+        return servicetax;
+    }
 
-		public double getDrlimit() {
-			return drlimit;
-		}
+    public void setServicetax( String servicetax )
+    {
+        this.servicetax = servicetax;
+    }
 
-		public void setCrlimit(double crlimit) {
-			this.crlimit = crlimit;
-		}
+    public String toString()
+    {
+        return this.name;
+    }
 
-		public double getCrlimit() {
-			return crlimit;
-		}
-		
-		public String getTypeLabel()
-		{
-		    if (isCustomer() && !isSupplier())
-		    {
-		        return "Customer";
-		    }
-	        if (!isCustomer() && isSupplier())
-	        {
-	            return "Supplier";
-	        }
-	        if (isCustomer() && isSupplier())
-	        {
-	            return "Customer & Supplier";
-	        }
-	        return null;
-		}
-	}
+    public void setAddressList( List<PartyAddress> addressList )
+    {
+        this.addressList = addressList;
+    }
 
-	
+    public List<PartyAddress> getAddressList()
+    {
+
+        return addressList;
+    }
+
+    public boolean isCustomer()
+    {
+        if ( ( type & CUSTOMER ) != 0 )
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isSupplier()
+    {
+        if ( ( type & SUPPLIER ) != 0 )
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void setCustomer( boolean value )
+    {
+        if ( value )
+        {
+            type = type | CUSTOMER;
+        }
+        else
+        {
+            type = type & ( ~CUSTOMER );
+        }
+    }
+
+    public void setSupplier( boolean value )
+    {
+        if ( value )
+        {
+            type = type | SUPPLIER;
+        }
+        else
+        {
+            type = type & ( ~SUPPLIER );
+        }
+    }
+
+    public void setDrlimit( double drlimit )
+    {
+        this.drlimit = drlimit;
+    }
+
+    public double getDrlimit()
+    {
+        return drlimit;
+    }
+
+    public void setCrlimit( double crlimit )
+    {
+        this.crlimit = crlimit;
+    }
+
+    public double getCrlimit()
+    {
+        return crlimit;
+    }
+
+    public String getTypeLabel()
+    {
+        if ( isCustomer() && !isSupplier() )
+        {
+            return "Customer";
+        }
+        if ( !isCustomer() && isSupplier() )
+        {
+            return "Supplier";
+        }
+        if ( isCustomer() && isSupplier() )
+        {
+            return "Customer & Supplier";
+        }
+        return null;
+    }
+}

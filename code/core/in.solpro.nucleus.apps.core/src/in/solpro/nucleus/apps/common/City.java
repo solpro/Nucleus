@@ -5,9 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public class City
+@Table(name = "City", uniqueConstraints = @UniqueConstraint(columnNames = {"name","company_id","district_id"}))
+public class City extends BaseObject
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +22,8 @@ public class City
 
     private String pincode;
 
-    private District objDistrict = null;
+    @JoinColumn(nullable=false) 
+    private District district = null;
 
     public int getId()
     {
@@ -44,14 +49,14 @@ public class City
      * public int getDistrict() { return district; } public void setDistrict(int district) { this.district = district; }
      */
 
-    public District getObjDistrict()
+    public District getDistrict()
     {
-        return objDistrict;
+        return district;
     }
 
-    public void setObjDistrict( District district )
+    public void setDistrict( District district )
     {
-        this.objDistrict = district;
+        this.district = district;
     }
 
     public String toString()

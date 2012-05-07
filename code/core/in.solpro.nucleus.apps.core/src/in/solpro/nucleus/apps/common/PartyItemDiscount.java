@@ -1,59 +1,60 @@
 package in.solpro.nucleus.apps.common;
+
 import java.sql.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public class PartyItemDiscount extends Discount 
+@Table(name = "PartyItemDiscount", uniqueConstraints = @UniqueConstraint(columnNames = {"ledger_id", "item_id","company_id"}))
+public class PartyItemDiscount extends Discount
 {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	private Item item;
-	private Ledger ledger;
-	private Date datefrom;
-	private Date dateto;
+    private Item item;
 
-	public int getId() {
-		return id;
-	}
+    private Party party;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    private Date datefrom;
 
-	public Date getDatefrom() {
-		return datefrom;
-	}
+    private Date dateto;
 
-	public void setDatefrom(Date datefrom) {
-		this.datefrom = datefrom;
-	}
+    public Date getDatefrom()
+    {
+        return datefrom;
+    }
 
-	public Date getDateto() {
-		return dateto;
-	}
+    public void setDatefrom( Date datefrom )
+    {
+        this.datefrom = datefrom;
+    }
 
-	public void setDateto(Date dateto) {
-		this.dateto = dateto;
-	}
+    public Date getDateto()
+    {
+        return dateto;
+    }
 
-	public Ledger getLedger() {
-		return ledger;
-	}
+    public void setDateto( Date dateto )
+    {
+        this.dateto = dateto;
+    }
 
-	public void setLedger(Ledger ledger) {
-		this.ledger = ledger;
-	}
+    public Party getParty()
+    {
+        return party;
+    }
 
-	public Item getItem() {
-		return item;
-	}
+    public void setParty( Party party )
+    {
+        this.party = party;
+    }
 
-	public void setItem(Item item) {
-		this.item = item;
-	}
+    public Item getItem()
+    {
+        return item;
+    }
+
+    public void setItem( Item item )
+    {
+        this.item = item;
+    }
 }

@@ -1,156 +1,220 @@
 package in.solpro.nucleus.apps.common;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public class PartyAddress extends BaseObject{
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	private Party party;
-	private AddressType objType = null;
-	private String contactperson;
-	private String address1;
-	private String address2;
-	private String address3;
-	private String phone;
-	private String fax;
-	private String mobile;
-	private String email;
-	private String description;
-	private City objCity = null;
-	private PartyAddressTag tag=PartyAddressTag.NONE;
-	public int getId() {
-		return id;
-	}
+@Table(name = "PartyAddress", uniqueConstraints = @UniqueConstraint(columnNames = {"address1","address2","address3","company_id"}))
+public class PartyAddress extends BaseObject
+{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+   // private Party party;
 
-	public Party getParty() {
-		return party;
-	}
+    private AddressType type = null;
 
-	public void setParty(Party party) {
-		this.party = party;
-	}
+    private String contactperson;
 
-/*	public int getType() {
-		return type;
-	}
+    private String address1;
 
-	public void setType(int type) {
-		this.type = type;
-	}*/
+    private String address2;
 
-	public AddressType getObjType() {
-		return objType;
-	}
+    private String address3;
 
-	public void setObjType(AddressType addresstype) {
-		this.objType = addresstype;
-		//this.type=addresstype.getId();
-	}
+    private String phone;
 
-	public String getContactperson() {
-		return contactperson;
-	}
+    private String fax;
 
-	public void setContactperson(String contactperson) {
-		this.contactperson = contactperson;
-	}
+    private String mobile;
 
-	public String getAddress1() {
-		return address1;
-	}
+    private String email;
 
-	public void setAddress1(String address1) {
-		this.address1 = address1;
-	}
+    private String description;
 
-	public String getAddress2() {
-		return address2;
-	}
+    private City city = null;
 
-	public void setAddress2(String address2) {
-		this.address2 = address2;
-	}
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinTable(name = "PARTY_ADDRESS", joinColumns = {@JoinColumn(name = "address")}, inverseJoinColumns = {@JoinColumn(name = "party")})
+    @JoinColumn(nullable=false)
+    private Party party;
+    //private Set<Party> parties = new HashSet<Party>();
 
-	public String getAddress3() {
-		return address3;
-	}
+    private PartyAddressTag tag = PartyAddressTag.NONE;
 
-	public void setAddress3(String address3) {
-		this.address3 = address3;
-	}
+    public int getId()
+    {
+        return id;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public void setId( int id )
+    {
+        this.id = id;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public Party getParty()
+    {
+        return party;
+    }
 
-	public String getFax() {
-		return fax;
-	}
+    public void setParty( Party party )
+    {
+        this.party = party;
+        party.getAddressList().add( this );
+    }
 
-	public void setFax(String fax) {
-		this.fax = fax;
-	}
+   /* public void setParties( Set<Party> parties )
+    {
+        this.parties = parties;
+    }
+    
+    public void addParty( Party party )
+    {
+        this.parties.add( party );
+    }
+    
 
-	public String getMobile() {
-		return mobile;
-	}
+    public Set<Party> getParties()
+    {
+        return this.parties;
+    }*/
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
+    /*
+     * public int getType() { return type; } public void setType(int type) { this.type = type; }
+     */
 
-	public String getEmail() {
-		return email;
-	}
+    public AddressType getType()
+    {
+        return type;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setType( AddressType addresstype )
+    {
+        this.type = addresstype;
+        // this.type=addresstype.getId();
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getContactperson()
+    {
+        return contactperson;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setContactperson( String contactperson )
+    {
+        this.contactperson = contactperson;
+    }
 
-	/*public int getCity() {
-		return city;
-	}
+    public String getAddress1()
+    {
+        return address1;
+    }
 
-	public void setCity(int city) {
-		this.city = city;
-	}*/
+    public void setAddress1( String address1 )
+    {
+        this.address1 = address1;
+    }
 
-	public City getObjCity() {
-		return objCity;
-	}
+    public String getAddress2()
+    {
+        return address2;
+    }
 
-	public void setObjCity(City city) {
-		this.objCity = city;
-		//this.city=city.getId();
-	}
+    public void setAddress2( String address2 )
+    {
+        this.address2 = address2;
+    }
 
-	public void setTag(PartyAddressTag tag) {
-		this.tag = tag;
-	}
+    public String getAddress3()
+    {
+        return address3;
+    }
 
-	public PartyAddressTag getTag() {
-		return tag;
-	}
+    public void setAddress3( String address3 )
+    {
+        this.address3 = address3;
+    }
+
+    public String getPhone()
+    {
+        return phone;
+    }
+
+    public void setPhone( String phone )
+    {
+        this.phone = phone;
+    }
+
+    public String getFax()
+    {
+        return fax;
+    }
+
+    public void setFax( String fax )
+    {
+        this.fax = fax;
+    }
+
+    public String getMobile()
+    {
+        return mobile;
+    }
+
+    public void setMobile( String mobile )
+    {
+        this.mobile = mobile;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail( String email )
+    {
+        this.email = email;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription( String description )
+    {
+        this.description = description;
+    }
+
+    /*
+     * public int getCity() { return city; } public void setCity(int city) { this.city = city; }
+     */
+
+    public City getCity()
+    {
+        return city;
+    }
+
+    public void setCity( City city )
+    {
+        this.city = city;
+        // this.city=city.getId();
+    }
+
+    public void setTag( PartyAddressTag tag )
+    {
+        this.tag = tag;
+    }
+
+    public PartyAddressTag getTag()
+    {
+        return tag;
+    }
 }
-

@@ -5,54 +5,66 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+@Entity
+@Table(name = "StockLocation", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "company_id"}))
+public class StockLocation extends BaseObject
+{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    @Entity
-	public class StockLocation extends BaseObject{
-		@Id
-    	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    	private int id;
-		@Column(nullable=false)
-		private String name;
-		private String description;
-		private StockLocationType objType = null;
+    @Column(nullable = false)
+    private String name;
 
-		public int getId() {
-			return id;
-		}
+    private String description;
 
-		public void setId(int id) {
-			this.id = id;
-		}
+    private StockLocationType type = null;
 
-		public String getName() {
-			return name;
-		}
+    public int getId()
+    {
+        return id;
+    }
 
-		public void setName(String name) {
-			this.name = name;
-		}
+    public void setId( int id )
+    {
+        this.id = id;
+    }
 
-		public String getDescription() {
-			return description;
-		}
+    public String getName()
+    {
+        return name;
+    }
 
-		public void setDescription(String description) {
-			this.description = description;
-		}
+    public void setName( String name )
+    {
+        this.name = name;
+    }
 
-		
-		public StockLocationType getObjType() {
-			return objType;
-		}
+    public String getDescription()
+    {
+        return description;
+    }
 
-		public void setObjType(StockLocationType stocklocationtype) {
-			this.objType = stocklocationtype;
-		}
+    public void setDescription( String description )
+    {
+        this.description = description;
+    }
 
-		public String toString() {
-			return this.name;
-		}
-	}
+    public StockLocationType getType()
+    {
+        return type;
+    }
 
+    public void setType( StockLocationType stocklocationtype )
+    {
+        this.type = stocklocationtype;
+    }
 
+    public String toString()
+    {
+        return this.name;
+    }
+}
