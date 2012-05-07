@@ -18,11 +18,13 @@ import in.solpro.nucleus.apps.common.LedgerLabel;
 import in.solpro.nucleus.apps.common.Party;
 import in.solpro.nucleus.apps.common.PartyAddress;
 import in.solpro.nucleus.apps.common.PartyItemDiscount;
+import in.solpro.nucleus.apps.common.ProductUser;
 import in.solpro.nucleus.apps.common.State;
 import in.solpro.nucleus.apps.common.StockLocation;
 import in.solpro.nucleus.apps.common.StockLocationType;
 import in.solpro.nucleus.apps.common.Tax;
 import in.solpro.nucleus.apps.common.Unit;
+import in.solpro.nucleus.apps.common.UserGroup;
 import in.solpro.nucleus.apps.core.session.SessionUtil;
 
 import java.util.List;
@@ -94,6 +96,16 @@ public class CompanyHelper extends GenericHelper
         List<ItemTax> itemtaxlist = itemtaxhelper.getItemTaxes();
         for ( i = 0; i < itemtaxlist.size(); i++ )
             helper.delete( itemtaxlist.get( i ) );
+        
+        ProductUserHelper productuserhelper = new ProductUserHelper();
+        List<ProductUser> productuserlist = productuserhelper.getProductUsers();
+        for ( i = 0; i < productuserlist.size(); i++ )
+            helper.delete( productuserlist.get( i ) );
+        
+        UserGroupHelper usergrouphelper = new UserGroupHelper();
+        List<UserGroup> usergrouplist = usergrouphelper.getUserGroups();
+        for ( i = 0; i < usergrouplist.size(); i++ )
+            helper.delete( usergrouplist.get( i ) );
         
         TaxHelper taxhelper = new TaxHelper();
         List<Tax> taxlist = taxhelper.getTaxes();
