@@ -14,9 +14,12 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "Ledger", uniqueConstraints = @UniqueConstraint(columnNames = {"name","company_id"}))
 public class Ledger extends BaseObject
 {
     public static final int LOCKED_NO = 0;
@@ -25,14 +28,15 @@ public class Ledger extends BaseObject
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected int ledgerId;
+    protected int id;
 
     @Column(nullable = false)
     protected String name;
 
     protected String printname;
 
-    protected LedgerGroup objLedgergroup = null;
+    @JoinColumn(nullable=false)
+    protected LedgerGroup ledgergroup = null;
 
     protected String description;
 
@@ -42,26 +46,18 @@ public class Ledger extends BaseObject
 
     protected int locked = LOCKED_NO;
 
-    @ManyToMany(cascade=CascadeType.MERGE)
-    @JoinTable(name = "LEDGER_LABEL",
-    joinColumns = {
-    @JoinColumn(name="ledger") 
-    },
-    inverseJoinColumns = {
-    @JoinColumn(name="label")
-    }
-    )
-
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "LEDGER_LABEL", joinColumns = {@JoinColumn(name = "ledger")}, inverseJoinColumns = {@JoinColumn(name = "label")})
     protected Set<LedgerLabel> labels = new HashSet<LedgerLabel>();
 
-    public int getLedgerId()
+    public int getId()
     {
-        return ledgerId;
+        return id;
     }
 
-    public void setLedgerId( int id )
+    public void setId( int id )
     {
-        this.ledgerId = id;
+        this.id = id;
     }
 
     public String getName()
@@ -84,14 +80,14 @@ public class Ledger extends BaseObject
         this.printname = printname;
     }
 
-    public LedgerGroup getObjLedgergroup()
+    public LedgerGroup getLedgergroup()
     {
-        return objLedgergroup;
+        return ledgergroup;
     }
 
-    public void setObjLedgergroup( LedgerGroup ledgerGroup )
+    public void setLedgergroup( LedgerGroup ledgerGroup )
     {
-        this.objLedgergroup = ledgerGroup;
+        this.ledgergroup = ledgerGroup;
     }
 
     public String toString()

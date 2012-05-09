@@ -1,64 +1,62 @@
 package in.solpro.nucleus.apps.core.dbhelper;
+
+import in.solpro.nucleus.apps.common.ItemTax;
+import in.solpro.nucleus.apps.core.session.SessionUtil;
+
 import java.util.List;
 
 import javax.persistence.Query;
 
-import in.solpro.nucleus.apps.common.Company;
-import in.solpro.nucleus.apps.common.ItemTax;
+public class ItemTaxHelper extends GenericHelper
+{
 
+    public ItemTaxHelper()
+    {
+        super( ItemTax.class );
+    }
 
+    public void addItemTax( ItemTax itemtax ) throws Exception
+    {
+        itemtax.validateAndUpdate();
+        save( itemtax );
+        System.out.println( "ItemTax Saved" );
+    }
 
-public class ItemTaxHelper extends GenericHelper{
+    public ItemTax getItemTax( Integer id ) throws Exception
+    {
+        ItemTax itemtax = (ItemTax) find( id );
+        itemtax.validateAndUpdate();
+        return itemtax;
+    }
 
-	public ItemTaxHelper()
-	{
-		super(ItemTax.class);
-	}
-	
-	public static void addItemTax(ItemTax p)
-	{
-		GenericHelper g = new GenericHelper(ItemTax.class);
-		g.save(p);
-		System.out.println("ItemTax Saved");
-	}
-	
-	public static ItemTax getItemTaxById(Integer id)
-	{
-		GenericHelper g = new GenericHelper(ItemTax.class);
-		ItemTax ItemTax=(ItemTax)g.find(id);
-	    return ItemTax;
-	}
-	
-	public ItemTax getItemTax(String name,Integer compid)
-	{
-		Query query = em.createQuery("SELECT OBJECT(pc) FROM ItemTax pc WHERE pc.name = :name AND pc.company.id= :compid");
-		query.setParameter("name", name);
-		//query.setParameter("compid",compid);
-		query.setParameter("compid",compid);
-		
-		List<?> rs = query.getResultList();
-		if (rs.size() > 0)
-		{
-		 return (ItemTax) rs.get(0);
-		}
-		return null;
-		//GenericHelper g = new GenericHelper(Company.class);
-		//return (Company)g.find(name);
-	}
-	
-	public List<ItemTax> getItemTaxs(Integer compid)
-	{
-		Query query = em.createQuery("SELECT OBJECT(pc) FROM ItemTax pc WHERE pc.company.id= :compid");
-		query.setParameter("compid", compid);
-		return query.getResultList();
-	}
-	
-	 public void updateItemTax(ItemTax group)
-	{
-	   	GenericHelper g=new GenericHelper(ItemTax.class);
-	   	g.update(group);
-	}
-	
-	
-	
+    public ItemTax getItemTax( String name ) throws Exception
+    {
+        Query query = em.createQuery( "SELECT OBJECT(pc) FROM ItemTax pc WHERE pc.name = :name AND pc.company.id= :compid" );
+        query.setParameter( "name", name );
+        query.setParameter( "compid", SessionUtil.getCompany().getId() );
+
+        List<?> rs = query.getResultList();
+        if ( rs.size() > 0 )
+        {
+            ItemTax itemtax = (ItemTax) rs.get( 0 );
+            itemtax.validateAndUpdate();
+            return itemtax;
+        }
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<ItemTax> getItemTaxes()
+    {
+        Query query = em.createQuery( "SELECT OBJECT(pc) FROM ItemTax pc WHERE pc.company.id= :compid" );
+        query.setParameter( "compid", SessionUtil.getCompany().getId() );
+        return query.getResultList();
+    }
+
+    public void updateItemTax( ItemTax itemtax ) throws Exception
+    {
+        itemtax.validateAndUpdate();
+        update( itemtax );
+    }
+
 }

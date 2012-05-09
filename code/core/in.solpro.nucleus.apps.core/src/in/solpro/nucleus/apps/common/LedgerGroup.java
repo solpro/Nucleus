@@ -6,13 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "LedgerGroup", uniqueConstraints = @UniqueConstraint(columnNames =
-{ "id", "company" }))
+@Table(name = "LedgerGroup", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "company_id"}))
 public class LedgerGroup extends BaseObject
 {
     /**
@@ -25,13 +23,13 @@ public class LedgerGroup extends BaseObject
     /**
      * Name.
      */
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String name;
 
     /**
      * LedgerGroupType.
      */
-    @Column(nullable=false)
+    @Column(nullable = false)
     private LedgerGroupType type;
 
     /**

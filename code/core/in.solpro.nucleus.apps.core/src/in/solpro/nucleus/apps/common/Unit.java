@@ -5,51 +5,66 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public class Unit extends BaseObject{
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	@Column(nullable=false)
-	private String name;
-	private double factor;
-	private Unit parentObj;
-	
-	public Unit getParentObj() {
-		return parentObj;
-	}
+@Table(name = "Unit", uniqueConstraints = @UniqueConstraint(columnNames = {"name","company_id"}))
+public class Unit extends BaseObject
+{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	public void setParentObj(Unit parentObj) {
-		this.parentObj = parentObj;
-	}
+    @Column(nullable = false)
+    private String name;
 
-	public int getId() {
-		return id;
-	}
+    private double factor;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    private Unit parentObj;
 
-	public String getName() {
-		return name;
-	}
+    public Unit getParentObj()
+    {
+        return parentObj;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setParentObj( Unit parentObj )
+    {
+        this.parentObj = parentObj;
+    }
 
-	public double getFactor() {
-		return factor;
-	}
+    public int getId()
+    {
+        return id;
+    }
 
-	public void setFactor(double factor) {
-		this.factor = factor;
-	}
+    public void setId( int id )
+    {
+        this.id = id;
+    }
 
-	public String toString() {
-		return this.name;
-	}
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName( String name )
+    {
+        this.name = name;
+    }
+
+    public double getFactor()
+    {
+        return factor;
+    }
+
+    public void setFactor( double factor )
+    {
+        this.factor = factor;
+    }
+
+    public String toString()
+    {
+        return this.name;
+    }
 }
-

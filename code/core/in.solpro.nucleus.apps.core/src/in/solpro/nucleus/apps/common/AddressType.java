@@ -5,58 +5,71 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public class AddressType extends BaseObject{
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	@Column( nullable=false)
-	private String name;
-	private String description;
+@Table(name = "AddressType", uniqueConstraints = @UniqueConstraint(columnNames = {"name","company_id"}))
+public class AddressType extends BaseObject
+{
 
-	public int getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Column(nullable = false)
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    private String description;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public int getId()
+    {
+        return id;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setId( int id )
+    {
+        this.id = id;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getName()
+    {
+        return name;
+    }
 
-	public String toString() {
-		return this.name;
-	}
-	
-	@Override
-	public boolean equals( Object obj )
-	{
-	    if (obj instanceof AddressType)
-	    {
-	        return this.name.equals( ((AddressType)obj).getName() );
-	    }
-	    return super.equals( obj );
-	}
-	
-	@Override
-	public int hashCode()
-	{
-	    return id;
-	}
+    public void setName( String name )
+    {
+        this.name = name;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription( String description )
+    {
+        this.description = description;
+    }
+
+    public String toString()
+    {
+        return this.name;
+    }
+
+    @Override
+    public boolean equals( Object obj )
+    {
+        if ( obj instanceof AddressType )
+        {
+            return this.name.equals( ( (AddressType) obj ).getName() );
+        }
+        return super.equals( obj );
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return id;
+    }
 }
